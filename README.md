@@ -1,2 +1,2 @@
 # Projects
-These are projects i have completed
+These are the projects that I have completed.
