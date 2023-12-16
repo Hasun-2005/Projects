@@ -1,4 +1,4 @@
-// EE1000 Multi Mode Baby Soother Group 1
+// Multi Mode Baby Soother Group 1
 
 // 4/12/23
 
