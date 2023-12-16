@@ -408,9 +408,9 @@ void loop() {
 
   strip.show();
 
-  // Include the neopixel code here
+ 
 
-    //The rest of the program will need to go in here
+    
 
   }
 
