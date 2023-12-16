@@ -7,8 +7,8 @@ int max_data_size = 100; // maximum amount of rows that this program would read 
 float threshold = 0.2; // threshold value used to determine if we are close to the -3dB value
 
 
-// Create a structure called data_structure, that has two fields: The first field should be called freq and be of
-// integer type and the second field should be called magResp of floating point number type.
+// Created a structure called data_structure, that has two fields: The first field is called freq and is of
+// integer type and the second field is called magResp of floating point number type.
 struct data_structure{
        int freq;
        float magRep;
@@ -23,12 +23,12 @@ void displayData(data_structure dataArray[]);
 
 int main() {
     
-    // Create an array that max_data_size number of elements, each of which is of type data_structure. Hence, each of
-    // the elements in your created array will have two fields (freq and magResp).
+    // I will  Create an array that has  max_data_size number of elements, each of which is of type data_structure. Hence, each of
+    // the elements in my  created array will have two fields (freq and magResp).
     data_structure dataArray[max_data_size];{
     
-    // Initialise all frequencies in your array to -1 and initialise all magnitude responses in your array to -1000.
-    // We are doing this because it is good practice to initialise data to a value that would be obviously identifiable
+    // Initialising all frequencies in your array to -1 and initialising  all magnitude responses in your array to -1000.
+    // I am doing this because it is good practice to initialise data to a value that would be obviously identifiable
     // as being the default we set and not a valid value. -1000 dB is a severe attenuation that could as well be
     // considered as -infinity. Realistically, -1000 dB corresponds to the output being 100 times smaller than the
     // input, but that sufficies for us.
@@ -42,17 +42,11 @@ int main() {
     
     // Display a welcome message
     cout << "welcome to the program";
+
     
-    // Prompt the user to enter a file name
-    // Receive the filename from the user and open the file
-    // Read the contents of the file, assuming that it is a csv file with the specifications described on Moodle.
-    // While reading the contents of the file, enter them into your array. You should fill up your array in such a way
-    // that the first row in the file would correspond to the first element of your array, the second to your second, etc.
-    // If the file has more than max_data_size rows, stop at the max_data_size'th row. Note that for this template file
-    // given to you, max_data_size is defined to be 100. When testing your code, we may set it to be a different value
-    // so ensure to use max_data_size and not just enter 100 in your code file. If the csv file has fewer than 100 rows
-    // then your program should read all the lines and the rest of the elements of the array should remain as -1 and
-    // -1000 respectively.
+    // Prompts the user to enter a file name
+    // This receives the filename from the user and open the file
+    
     cout << "Enter the CSV file name:";
     string fileName;
     cin >> fileName;
@@ -89,8 +83,7 @@ int main() {
 
 
     
-    // Call a function here to display your array after you have read in the csv file and stored it in the array variable
-	// i.e. The function it will call is
+    
 
     displayData(dataArray);
     //Displays the data in the array
@@ -106,7 +99,7 @@ int main() {
     //Outputs the frequency and the magnitude at the cut off
 
     
-    // Display a closing message to the user
+    // Displays a closing message to the user
     cout << "\nThe program has ended";
 
 }
@@ -115,7 +108,7 @@ int main() {
 
 
 
-// Note that some part of this function is written for you but you are to write some part of it.
+
 data_structure analyse_data(data_structure data[])
 {
     data_structure cut_off_point = data[0]; // Initialise the cut off point to the first element of the array - this
@@ -128,15 +121,10 @@ data_structure analyse_data(data_structure data[])
 
 
     
-    // Search through "data" to find the maximum magnitude response value and save the maximum response value as
+    // Searches through "data" to find the maximum magnitude response value and save the maximum response value as
     // max_magnitude_response.
 
 
-
-    // The following code is simple but I chose to write it for you because I wanted to use the abs() funciton that
-    // is found in the cmath library and those new to C++ may not know about this. What the abs() function does is to
-    // return the positive value of whatever argument you supply to it. Hence, abs(-3) will return 3 and abs(3) would
-    // also return 3.
    float cut_off_magnitude = max_magnitude_response - 3;
     for (int i = 0; i < max_data_size; i++){
         //cout << abs(data[i].magResp - cut_off_magnitude) << endl;
