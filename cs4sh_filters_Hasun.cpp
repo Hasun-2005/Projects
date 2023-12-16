@@ -6,7 +6,7 @@ using namespace std;
 int max_data_size = 100; // maximum amount of rows that this program would read from a file.
 float threshold = 0.2; // threshold value used to determine if we are close to the -3dB value
 
-//TODO 1:
+
 // Create a structure called data_structure, that has two fields: The first field should be called freq and be of
 // integer type and the second field should be called magResp of floating point number type.
 struct data_structure{
@@ -22,11 +22,11 @@ void displayData(data_structure dataArray[]);
 
 
 int main() {
-    //TODO 2:
+    
     // Create an array that max_data_size number of elements, each of which is of type data_structure. Hence, each of
     // the elements in your created array will have two fields (freq and magResp).
     data_structure dataArray[max_data_size];{
-    //TODO 3:
+    
     // Initialise all frequencies in your array to -1 and initialise all magnitude responses in your array to -1000.
     // We are doing this because it is good practice to initialise data to a value that would be obviously identifiable
     // as being the default we set and not a valid value. -1000 dB is a severe attenuation that could as well be
@@ -39,10 +39,10 @@ int main() {
         //This initiliase the magnitude response
     }
 }
-    //TODO 4:
+    
     // Display a welcome message
     cout << "welcome to the program";
-    //TODO 5:
+    
     // Prompt the user to enter a file name
     // Receive the filename from the user and open the file
     // Read the contents of the file, assuming that it is a csv file with the specifications described on Moodle.
@@ -88,13 +88,12 @@ int main() {
 
 
 
-    //TODO 6:
+    
     // Call a function here to display your array after you have read in the csv file and stored it in the array variable
-	// i.e. The function it will call is TODO 10 below.
+	// i.e. The function it will call is
 
     displayData(dataArray);
     //Displays the data in the array
-    //TODO 7:
     // Call the function analyse_data to find the cutoff point and display a message to the user specifying what the
     // cutoff point (i.e. the frequency of the cutoff point), and the magnitude response at that point.
     // Note that a constant called threshold was defined above and used in the function. The threshold covers for
@@ -106,7 +105,7 @@ int main() {
     cout << "\nmagnitude at the cutoff " << results.magRep;
     //Outputs the frequency and the magnitude at the cut off
 
-    //TODO 8:
+    
     // Display a closing message to the user
     cout << "\nThe program has ended";
 
@@ -116,7 +115,7 @@ int main() {
 
 
 
-// Note that some part of this functio is written for you but you are to write some part of it.
+// Note that some part of this function is written for you but you are to write some part of it.
 data_structure analyse_data(data_structure data[])
 {
     data_structure cut_off_point = data[0]; // Initialise the cut off point to the first element of the array - this
@@ -128,7 +127,7 @@ data_structure analyse_data(data_structure data[])
 
 
 
-    //TODO 9:
+    
     // Search through "data" to find the maximum magnitude response value and save the maximum response value as
     // max_magnitude_response.
 
@@ -153,7 +152,7 @@ data_structure analyse_data(data_structure data[])
     return cut_off_point;
 }
 
-//TODO 10:
+
 // Create a function that displays the data in your data array. This funciton is called by your main function (i.e. TODO 6)
 void displayData(data_structure dataArray[])
 {
