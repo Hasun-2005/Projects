@@ -1,7 +1,4 @@
-// Scaffolding for Code Submission 3
-// Please use this file for your code submission 3. Modify it to put in your required code.
-// Please do not delete any of the functions within this file. However, you are permitted to create and add more
-// functions if you need any.
+
 //Includes all the libraries
 #include <iostream>
 #include <fstream>
@@ -38,15 +35,13 @@ int main(){
          return 1;
     }
 
-// *************** YOUR CODE STARTS HERE ******************************************************
-    // ********************** TODO ********************
+    
     // Display some introductory message to the game
     // Prompt the user to enter a guess and save the guess as a string variable called "guess".
     cout << "Welcome to the Program:" << "\n";
     cout << "Enter a guess to the wordle:";
     string guess;
     cin >> guess;
-    // ****************************** TODO ************************************
     // Iterate over all the characters in guess and check if there is any character that is not an alphabet.
     // If there is no non-alphabet in guess, then convert all alphabets in guess to upper case.
     char c;
@@ -62,7 +57,7 @@ int main(){
         // c = charToUpper(guess[j]); // Convert to uppercase
     }
 
-// **************************** No need to modify this section *******************************
+
     // Check for positions of characters in Guess
     int position = -1;
     //This initiliases the position as -1
@@ -97,10 +92,10 @@ int main(){
 
 
 
-//******************************* YOUR CODE CONTINUES HERE *************************************
-    // ************************ TODO **********************************
+
     // Check if the user guessed the word correctly
-    // Hint: in the previous section, there is a variable called count. Maybe try using the value stored in count
+
+        
     // after the last section to determine if the guess was correct...
 
     string correctLocation; // Initialize an empty string to store correct characters
@@ -159,7 +154,7 @@ bool checkIfAlphabet(char c){
 
 // Define charToUpper
 char charToUpper(char c){
-      // ************************ TODO **********************************
+      
     // This function should return the uppercase version of any alphabet sent in to it. Hence
     // charToUpper('a') should return 'A', and charToUpper('q') should return 'Q'. If the
     // character passed into the function is an upper case character then it should just return
@@ -181,7 +176,6 @@ char charToUpper(char c){
 }
 // Define checkCharInWord
 int checkCharInWord(string s, char c){
-    // ************************ TODO **********************************
     // This function is to check the position of c in s. For example, if c = 'r' and s = "royal"
     // then checkCharInWord("royal", 'r') should return 0 and checkCharInWord("royal", 'a') should
     // return 3. If c does not exist in s then it should return a value of -1. Hence,
