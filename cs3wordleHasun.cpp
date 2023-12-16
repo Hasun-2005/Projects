@@ -15,7 +15,7 @@ int checkCharInWord(string s, char c);
 // Main Function
 int main(){
 
-    // Create an empty string variable to hold the wordForTheDay
+    // Creates an empty string variable to hold the wordForTheDay
     string wordForTheDay = "";
 
     // This section of the code selects a random word from the text file called words.txt
@@ -86,17 +86,15 @@ int main(){
                 cout << c << " is in the word, but not in position " << i << ".\n\n";
             } //Checks if it is in the word but not in position
         }
+
+
+
+
+
     
-    //**************************************************************************
-
-
-
-
-
-    // Check if the user guessed the word correctly
 
         
-    // after the last section to determine if the guess was correct...
+    
 
     string correctLocation; // Initialize an empty string to store correct characters
     bool correct = true;
@@ -136,7 +134,7 @@ int main(){
 
 // Define checkIfAlphabet
 bool checkIfAlphabet(char c){
-    // ************************ TODO **********************************
+    
     // This function should return true if c is an alphabet (upper or lower case) and it should
     // return false if c is not an alphabet. Hence, checkIfAlphabet('a') should return true and
     // checkIfAlphabet('7') should return false.
