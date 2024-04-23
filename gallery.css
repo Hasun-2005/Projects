@@ -1,0 +1,128 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background-color: #f2f2f2; /* Changed background color to a lighter shade */
+}
+
+button {
+  padding: 10px;
+  width: 100px; /* Increased button width for better readability */
+  color: #fff;
+  font-family: inherit;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none; /* Removed border for a cleaner look */
+  background-color: #333; /* Changed button background color */
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
+  font-size: 1rem; /* Increased font size for better visibility */
+}
+
+.app {
+  max-width: 1224px;
+  width: 92%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Increased gap for better spacing */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding-bottom: 20px; /* Increased padding for better separation */
+}
+
+.header h2 {
+  font-size: 1.5rem; /* Increased font size for better emphasis */
+}
+
+.server-message {
+  width: 100%;
+  padding: 20px; /* Increased padding for better readability */
+  border-radius: 5px;
+  background-color: #f0f0f0; /* Changed background color */
+}
+
+.input-div {
+  width: 100%;
+  min-height: 200px; /* Changed height to min-height for flexibility */
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 2px dashed #333; /* Changed border to dashed for a softer look */
+  background-color: #fff;
+  position: relative;
+}
+
+.input-div .browse {
+  color: #333;
+  font-weight: bold;
+}
+
+.file {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.saved-div,
+.queued-div {
+  width: 100%;
+  min-height: 200px; /* Changed height to min-height for flexibility */
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px; /* Increased gap for better spacing */
+  position: relative;
+  border-radius: 5px;
+  border: 2px dashed #333; /* Changed border to dashed for a softer look */
+  background-color: #fff;
+}
+
+.saved-div .image,
+.queued-div .image {
+  width: calc(25% - 20px); /* Adjusted width for better alignment */
+  height: 150px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.saved-div .image img,
+.queued-div .image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Ensures the image covers the entire container */
+}
+
+.saved-div .image span,
+.queued-div .image span {
+  position: absolute;
+  top: 10px; /* Adjusted top position for better alignment */
+  right: 10px; /* Adjusted right position for better alignment */
+  cursor: pointer;
+  font-size: 20px; /* Adjusted font size for better visibility */
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5); /* Added background color with transparency for better contrast */
+  padding: 5px; /* Increased padding for better appearance */
+  border-radius: 50%; /* Rounded shape for the delete button */
+  transition: background-color 0.3s ease;
+}
+
+.saved-div .image span:hover,
+.queued-div .image span:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Darkened background color on hover */
+}
