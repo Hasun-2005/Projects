@@ -119,7 +119,9 @@ class Quiz : public Module {
 private:
     int QuizID;
     string Questions;
+    string Answers;
     float TimeLimit;
+    float Score;
 
 public:
     void setQuizID(int newQuizID) { QuizID = newQuizID; }
@@ -128,8 +130,32 @@ public:
     void setQuestions(const string& newQuestions) { Questions = newQuestions; }
     string getQuestions() const { return Questions; }
 
+    void setAnswers(const string& newAnswers) {Answers = newAnswers;}
+    string getAnswers() const {return Answers;}
+
     void setTimeLimit(float newTimeLimit) { TimeLimit = newTimeLimit; }
     float getTimeLimit() const { return TimeLimit; }
+
+    void getScore(float newScore) {Score = newScore;}
+    float getScore() const {return Score;}
+
+    float calculateScore(string userAnswers)
+    {
+        if (userAnswers.size() != Answers.size())
+        {
+            return 0.0; // Incorrect number of answers
+        }
+        float correctAnswers = 0;
+        for(size_t i = 0; i < Answers.size(); i++)
+        {
+            if(userAnswers[i] == Answers[i])
+            {
+                correctAnswers++;
+            }
+        }
+        Score = (correctAnswers/Answers.size()) * 100.0;
+        return Score;
+    }
 };
 
 class GradeBook : public Quiz {
