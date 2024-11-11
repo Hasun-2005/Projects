@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 using namespace std;
-
+#include <regex>
+#include <fstream>
+#include <vector>
 class Course {
 private:
     int CourseID;
@@ -9,23 +11,78 @@ private:
     string CourseName;
     string Description;
     string Date;
+    std::string courseName;
 
 public:
-    void setCourseID(int newCourseID) { CourseID = newCourseID; }
+    Course(int id, const std::string &name) : CourseID(id), courseName(name) {}
+    void setCourseID(int newCourseID) {
+        srand((unsigned) time(NULL));
+        CourseID = newCourseID;
+
+        // Get a random number
+        int CourseID = rand();
+
+        // Print the random number
+        cout<<"This is your course id"<< CourseID << endl;
+    }
     int getCourseID() const { return CourseID; }
 
-    void setCourseNumber(int newCourseNumber) { CourseNumber = newCourseNumber; }
+    void setCourseNumber(int newCourseNumber) {
+         CourseNumber = newCourseNumber;
+
+    }
+
     int getCourseNumber() const { return CourseNumber; }
 
-    void setCourseName(const string& newCourseName) { CourseName = newCourseName; }
-    string getCourseName() const { return CourseName; }
+    void setCourseName(const string& coursename) {
+        CourseName = coursename;
+        cout << "This is your coursename";
+    }
+    string getCourseName() const {
+            return CourseName;
+    }
 
     void setDescription(const string& newDescription) { Description = newDescription; }
     string getDescription() const { return Description; }
 
     void setDate(const string& newDate) { Date = newDate; }
     string getDate() const { return Date; }
+
+
+
+
 };
+vector<Course> loadCourses(const std::string &filename) {
+    vector<Course> courses;
+    ifstream file(filename, ios::binary);
+
+    if (!file.is_open()) {
+        cerr << "Could not open the file " << filename << endl;
+        return courses;  // Return an empty vector if file cannot be opened
+    }
+
+    while (true) {
+        int id;
+        size_t nameLength;
+        string name;
+
+        // Read course ID
+        if (!file.read(reinterpret_cast<char*>(&id), sizeof(id))) break;
+
+        // Read name length
+        if (!file.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength))) break;
+
+        // Resize name string to expected length and read name
+        name.resize(nameLength);
+        if (!file.read(&name[0], nameLength)) break;
+
+        // Add the course to the vector
+        courses.emplace_back(id, name);
+    }
+
+    file.close();
+    return courses;
+}
 
 class User : public Course {
 private:
@@ -39,8 +96,36 @@ public:
     void setUserID(int newUserID) { UserID = newUserID; }
     int getUserID() const { return UserID; }
 
-    void setUserName(const string& newUserName) { UserName = newUserName; }
-    string getUserName() const { return UserName; }
+    void setUserName(const string& newUserName) {
+
+        string userNameToValidate = newUserName;
+
+            // Remove non-alphabet characters from the input
+        string cleanedUserName = "";
+        for (char c : userNameToValidate) {
+             if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+                    cleanedUserName += c;
+                }
+        }
+
+            // Check if cleanedUserName meets criteria: contains alphabet characters and is under 15 chars
+        if (!cleanedUserName.empty() && cleanedUserName.length() <= 15) {
+                UserName = cleanedUserName; // Save the cleaned username
+                cout << "Welcome Dr. " << cleanedUserName << endl;
+        } else {
+                // If invalid, prompt to try again
+                cout << "This is invalid. Please enter a username with only alphabetic characters (a-z or A-Z) and max 15 characters." << endl;
+                cout << "Enter your username: ";
+
+                // Read new input for the next validation
+                cin >> userNameToValidate;
+        }
+    }
+
+
+    string getUserName() const {
+        return UserName;
+    }
 
     void setPassword(const string& newPassword) { Password = newPassword; }
     string getPassword() const { return Password; }
@@ -119,9 +204,7 @@ class Quiz : public Module {
 private:
     int QuizID;
     string Questions;
-    string Answers;
     float TimeLimit;
-    float Score;
 
 public:
     void setQuizID(int newQuizID) { QuizID = newQuizID; }
@@ -130,32 +213,8 @@ public:
     void setQuestions(const string& newQuestions) { Questions = newQuestions; }
     string getQuestions() const { return Questions; }
 
-    void setAnswers(const string& newAnswers) {Answers = newAnswers;}
-    string getAnswers() const {return Answers;}
-
     void setTimeLimit(float newTimeLimit) { TimeLimit = newTimeLimit; }
     float getTimeLimit() const { return TimeLimit; }
-
-    void getScore(float newScore) {Score = newScore;}
-    float getScore() const {return Score;}
-
-    float calculateScore(string userAnswers)
-    {
-        if (userAnswers.size() != Answers.size())
-        {
-            return 0.0; // Incorrect number of answers
-        }
-        float correctAnswers = 0;
-        for(size_t i = 0; i < Answers.size(); i++)
-        {
-            if(userAnswers[i] == Answers[i])
-            {
-                correctAnswers++;
-            }
-        }
-        Score = (correctAnswers/Answers.size()) * 100.0;
-        return Score;
-    }
 };
 
 class GradeBook : public Quiz {
@@ -173,6 +232,23 @@ public:
 
     void setGradebook(const string& newGradebook) { Gradebook = newGradebook; }
     string getGradebook() const { return Gradebook; }
+    float calculateScore(string userAnswers)
+    {
+       // if (userAnswers.size() != Answers.size())
+        {
+            return 0.0; // Incorrect number of answers
+        }
+        float correctAnswers = 0;
+        //for(size_t i = 0; i < Answers.size(); i++)
+        {
+            //if(userAnswers[i] == Answers[i])
+            {
+                correctAnswers++;
+            }
+        }
+       // Score = (correctAnswers/Answers.size()) * 100.0;
+        return Score;
+    }
 };
 
 int main() {
@@ -188,41 +264,208 @@ int main() {
        // cout << "Course Number: " << course.getCourseNumber() << endl;
       //  cout << "Description: " << course.getDescription() << endl;
         //cout << "Date: " << course.getDate() << endl;
-        int options;
-        string start;
-        cout << "Press Y for yes" << endl;
-        cout << "Press N for no" << endl;
-        cout << "Would you like to start:" << endl;
-        cin >> start;
+        bool status = true;
+        while (status) {
+            User user;
+            int options;
+            string lecturername;
+            string start;
+            cout << "Press Y for yes" << endl;
+            cout << "Press N for no" << endl;
+            cout << "Would you like to start:" << endl;
+            cin >> start;
 
-        if (start == "Y" || start == "y") {
-            cout << "Welcome to the student management system!" << endl;
-            cout << "Would you like to start" << endl;
-            cout << endl;
+            if (start == "Y" || start == "y") {
+                cout << "Welcome to the student management system!" << endl;
 
-            cout << "What is your role" << endl;
-            cout << "Press 1 if you are a lecturer" << endl;
-            cout << "Press 2 if you are a student" << endl;
-            cout << "Press anything else if you are anything else:" << endl;
-            cin >> options;
+                cout << endl;
+                cout << "What is your role" << endl;
+                cout << "Press 1 if you are a lecturer" << endl;
+                cout << "Press 2 if you are a student" << endl;
+                cout << "Press anything else if you are anything else:" << endl;
+                cin >> options;
+                if (options == 1) {
+                    int lectureroptions;
+                    cout << "Welcome to the program lecturer" << endl;
+                    cout << "Please choose from the following options" << endl;
+                    cout << "Press 1 if you want to manage the courses" << endl;
+                    cout << "Press 2 if you want to manage the users" << endl;
+                    cout << "Press 3 if you want to manage the Assignments" << endl;
+                    cout << "Press 4 if you want to manage the Modules" << endl;
+                    cout << "press 5 if you want to manage the Resources" << endl;
+                    cout << "press 6 if you want to manage the Quiz" << endl;
+                    cout << "press 7 if you want to manage the GradeBook" << endl;
+                    cout << "please make sure all inputs are no numbers and characters just text" << endl;
+                    cout <<"Enter your choice";
+                    cin >> lectureroptions;
+                    if (lectureroptions == 1) {
+                        vector<Course> ManageCourses;
+                        const string filename = "managecourses.dat";
+                        ManageCourses = loadCourses(filename);
+                        int choice;
+                        do {
+                            std::cout << "\nCourse Management System\n";
+                            std::cout << "1. Add Course\n";
+                            std::cout << "2. Edit Course\n";
+                            std::cout << "3. Display Courses\n";
+                            std::cout << "4. Save and Exit\n";
+                            std::cout << "Enter choice: ";
+                            std::cin >> choice;
 
-            if (options == 1) {
-                int lecturercourses;
-                Course course;
-                cout << "Welcome lecturer!" << endl;
-                cout << "How many courses would you like to see";
-                cin >> lecturercourses;
+                            switch (choice) {
+                                case 1:
+                                    addCourse(courses);
+                                break;
+                                case 2:
+                                    editCourse(courses);
+                                break;
+                                case 3:
+                                    displayCourses(courses);
+                                break;
+                                case 4:
+                                    saveCourses(courses, filename);
+                                std::cout << "Courses saved. Exiting...\n";
+                                break;
+                                default:
+                                    std::cout << "Invalid choice. Please try again.\n";
+                            }
+                        } while (choice != 4);
+
+                        return 0;
+                    }
 
 
+                    }
+                    if (lectureroptions == 2) {
+                        cout << "Enter your lecturer name:" << endl;
+                        cin >> lecturername;
+                        user.setUserName(lecturername);
+                        user.getUserName();
+
+                    }
+                    if (lectureroptions == 3) {
+
+                    }
+                    if (lectureroptions == 4) {
+
+                    }
+                    if (lectureroptions == 5) {
+
+                    }
+                    if (lectureroptions == 6) {
+
+                    }
+                    if (lectureroptions == 7) {
+
+                    }
+                    else {
+
+                    }
+
+
+
+
+
+
+
+
+                }
+                else if (options == 2) {
+                    int studentcourses;
+                    cout << "Welcome student!" << endl;
+                    int lectureroptions;
+                    cout << "Welcome to the program lecturer" << endl;
+                    cout << "Please choose from the following options" << endl;
+                    cout << "Press 1 if you want to manage the courses" << endl;
+                    cout << "Press 2 if you want to manage the users" << endl;
+                    cout << "Press 3 if you want to manage the Assignments" << endl;
+                    cout << "Press 4 if you want to manage the Modules" << endl;
+                    cout << "press 5 if you want to manage the Resources" << endl;
+                    cout << "press 6 if you want to manage the Quiz" << endl;
+                    cout << "press 7 if you want to manage the GradeBook" << endl;
+                    cout << "please make sure all inputs are no numbers and characters just text" << endl;
+                    cout <<"Enter your choice";
+                    cin >> lectureroptions;
+                    if (lectureroptions == 1) {
+                        cout << "Enter the courses you would like to manage";
+
+                    }
+                    if (lectureroptions == 2) {
+                        cout << "Enter your lecturer name:" << endl;
+                        cin >> lecturername;
+                        user.setUserName(lecturername);
+                        user.getUserName();
+
+                    }
+                    if (lectureroptions == 3) {
+
+                    }
+                    if (lectureroptions == 4) {
+
+                    }
+                    if (lectureroptions == 5) {
+
+                    }
+                    if (lectureroptions == 6) {
+
+                    }
+                    if (lectureroptions == 7) {
+
+                    }
+                    else {
+
+                    }
+
+                }
+                else {
+                    cout << "Welcome visitor!" << endl;
+                    int lectureroptions;
+                    cout << "Welcome to the program lecturer" << endl;
+                    cout << "Please choose from the following options" << endl;
+                    cout << "Press 1 if you want to manage the courses" << endl;
+                    cout << "Press 2 if you want to manage the users" << endl;
+                    cout << "Press 3 if you want to manage the Assignments" << endl;
+                    cout << "Press 4 if you want to manage the Modules" << endl;
+                    cout << "press 5 if you want to manage the Resources" << endl;
+                    cout << "press 6 if you want to manage the Quiz" << endl;
+                    cout << "press 7 if you want to manage the GradeBook" << endl;
+                    cout << "please make sure all inputs are no numbers and characters just text" << endl;
+                    cout <<"Enter your choice";
+                    cin >> lectureroptions;
+                    if (lectureroptions == 1) {
+
+
+                    }
+                    if (lectureroptions == 2) {
+                        cout << "Enter your lecturer name:" << endl;
+                        cin >> lecturername;
+                        user.setUserName(lecturername);
+                        user.getUserName();
+
+                    }
+                    if (lectureroptions == 3) {
+
+                    }
+                    if (lectureroptions == 4) {
+
+                    }
+                    if (lectureroptions == 5) {
+
+                    }
+                    if (lectureroptions == 6) {
+
+                    }
+                    if (lectureroptions == 7) {
+
+                    }
+                    else {
+
+                    }
+                }
             }
-            else if (options == 2) {
-                int studentcourses;
-                cout << "Welcome student!" << endl;
-            }
-            else {
-                cout << "Welcome visitor!" << endl;
-            }
+
         }
+
 
         return 0;
 }
